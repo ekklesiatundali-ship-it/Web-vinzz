@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard ‹ VINZZ Developer — WordPress</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        body {
+            background: #f1f1f1;
+            font-size: 13px;
+        }
+        
+        .wp-admin-bar {
+            background: #23282d;
+            height: 32px;
+        }
+        
+        .wp-sidebar {
+            background: #23282d;
+            width: 160px;
+            color: #a7aaad;
+        }
+        
+        .wp-sidebar.folded {
+            width: 36px;
+        }
+        
+        .wp-menu-item {
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.15s ease-in-out;
+        }
+        
+        .wp-menu-item:hover {
+            background: #191e23;
+            color: #00a0d2;
+        }
+        
+        .wp-menu-item.current {
+            background: #0073aa;
+            color: white;
+        }
+        
+        .wp-submenu {
+            background: #32373c;
+            display: none;
+        }
+        
+        .wp-menu-item.has-submenu:hover .wp-submenu {
+            display: block;
+        }
+        
+        .wp-main-content {
+            margin-left: 160px;
+            margin-top: 32px;
+            background: white;
+        }
+        
+        .wp-main-content.folded {
+            margin-left: 36px;
+        }
+        
+        .wp-header {
+            background: white;
+            border-bottom: 1px solid #ccd0d4;
+            padding: 0;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+        }
+        
+        .wp-content {
+            padding: 20px;
+        }
+        
+        .wp-box {
+            background: white;
+            border: 1px solid #ccd0d4;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+        }
+        
+        .wp-button {
+            background: #0073aa;
+            border: 1px solid #0073aa;
+            color: white;
+            padding: 0 12px;
+            height: 30px;
+            border-radius: 3px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.15s ease-in-out;
+        }
+        
+        .wp-button:hover {
+            background: #005a87;
+            border-color: #005a87;
+        }
+        
+        .wp-button-secondary {
+            background: #f7f7f7;
+            border: 1px solid #ccd0d4;
+            color: #555;
+        }
+        
+        .wp-button-secondary:hover {
+            background: #fafafa;
+            border-color: #999;
+        }
+        
+        .dashboard-widget {
+            background: white;
+            border: 1px solid #ccd0d4;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+        }
+        
+        .dashboard-widget-header {
+            background: #fafafa;
+            border-bottom: 1px solid #eee;
+            padding: 8px 12px;
+            font-weight: 600;
+        }
+        
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .wp-menu-icon {
+            width: 20px;
+            height: 20px;
+            background-size: 20px 20px;
+            opacity: 0.6;
+        }
+        
+        .wp-menu-item:hover .wp-menu-icon {
+            opacity: 1;
+        }
+        
+        .wp-screen-meta {
+            background: #fff;
+            border: 1px solid #ccd0d4;
+            border-top: none;
+            padding: 20px;
+            display: none;
+        }
+        
+        .wp-welcome-panel {
+            background: #fff;
+            border: 1px solid #ccd0d4;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .wp-welcome-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00a0d2, #0073aa);
+        }
+    </style>
+</head>
+<body>
+    <!-- WordPress Admin Bar -->
+    <div class="wp-admin-bar fixed top-0 left-0 right-0 z-50 flex items-center px-4">
+        <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-2 text-white">
+                <i class="fab fa-wordpress text-lg"></i>
+                <span class="text-sm font-medium">VINZZ Developer</span>
+            </div>
+        </div>
+        <div class="ml-auto flex items-center space-x-4 text-white text-sm">
+            <span>Howdy, VINZZ</span>
+            <a href="#" class="hover:text-blue-300">Edit Profile</a>
+            <a href="#" class="hover:text-blue-300">Log Out</a>
+        </div>
+    </div>
+
+    <!-- WordPress Sidebar -->
+    <div id="wp-sidebar" class="wp-sidebar fixed left-0 top-8 bottom-0 z-40 slide-in">
+        <div class="p-0">
+            <!-- WordPress Logo -->
+            <div class="p-4 border-b border-gray-700">
+                <div class="flex items-center space-x-2">
+                    <i class="fab fa-wordpress text-blue-400 text-xl"></i>
+                    <span class="text-white font-medium text-sm" id="site-title">VINZZ Developer</span>
+                </div>
+            </div>
+            
+            <!-- Menu Items -->
+            <div class="wp-menu">
+                <div class="wp-menu-item current cursor-pointer" onclick="showSection('dashboard')">
+                    <div class="flex items-center px-4 py-2">
+                        <i class="fas fa-tachometer-alt wp-menu-icon mr-3"></i>
+                        <span id="menu-dashboard">Dashboard</span>
+                    </div>
+                </div>
+                
+                <div class="wp-menu-item cursor-pointer" onclick="showSection('posts')">
+                    <div class="flex items-center px-4 py-2">
+                        <i class="fas fa-edit wp-menu-icon mr-3"></i>
+                        <span id="menu-posts">Posts</span>
+                    </div>
+                </div>
+                
+                <div class="wp-menu-item cursor-pointer" onclick="showSection('media')">
+                    <div class="flex items-center px-4 py-2">
+                        <i class="fas fa-photo-video wp-menu-icon mr-3"></i>
+                        <span id="menu-media">Media</span>
+                    </div>
+                </div>
+                
+                <div class="wp-menu-item cursor-pointer" onclick="showSection('pages')">
+                    <div class="flex items-center px-4 py-2">
+                        <i class="fas fa-file-alt wp-menu-icon mr-3"></i>
+                        <span id="menu-pages">Pages</span>
+                    </div>
+                </div>
+                
+                <div class="wp-menu-item cursor-pointer" onclick="showSection('comments')">
+                    <div class="flex items-center px-4 py-2">
+                        <i class="fas fa-comments wp-menu-icon mr-3"></i>
+                        <span id="menu-comments">Comments</span>
+                        <span class="ml-auto bg-orange-500 text-white text-xs px-2 py-1 rounded-full">2</span>
+                    </div>
+                </div>
+                
+                <div class="wp-menu-item has-submenu cursor-pointer">
+                    <div class="flex items-center px-4 py-2">
+                        <i class="fas fa-paint-brush wp-menu-icon mr-3"></i>
+                        <span id="menu-appearance">Appearance</span>
+                        <i class="fas fa-chevron-right ml-auto text-xs"></i>
+                    </div>
+                    <div class="wp-submenu">
+                        <div class="px-8 py-2 hover:bg-gray-600 cursor-pointer" onclick="showSection('themes')">Themes</div>
+                        <div class="px-8 py-2 hover:bg-gray-600 cursor-pointer">Customize</div>
+                        <div class="px-8 py-2 hover:bg-gray-600 cursor-pointer">Widgets</div>
+                        <div class="px-8 py-2 hover:bg-gray-600 cursor-pointer">Menus</div>
+                    </div>
+                </div>
+                
+                <div class="wp-menu-item has-submenu cursor-pointer">
+                    <div class="flex items-center px-4 py-2">
+                        <i class="fas fa-plug wp-menu-icon mr-3"></i>
+                        <span id="menu-plugins">Plugins</span>
+                        <i class="fas fa-chevron-right ml-auto text-xs"></i>
+                    </div>
+                    <div class="wp-submenu">
+                        <div class="px-8 py-2 hover:bg-gray-600 cursor-pointer" onclick="showSection('plugins')">Installed Plugins</div>
+                        <div class="px-8 py-2 hover:bg-gray-600 cursor-pointer">Add New</div>
+                    </div>
+                </div>
+                
+                <div class="wp-menu-item has-submenu cursor-pointer">
+                    <div class="flex items-center px-4 py-2">
+                        <i class="fas fa-users wp-menu-icon mr-3"></i>
+                        <span id="menu-users">Users</span>
+                        <i class="fas fa-chevron-right ml-auto text-xs"></i>
+                    </div>
+                    <div class="wp-submenu">
+                        <div class="px-8 py-2 hover:bg-gray-600 cursor-pointer" onclick="showSection('users')">All Users</div>
+                        <div class="px-8 py-2 hover:bg-gray-600 cursor-pointer">Add New</div>
+                        <div class="px-8 py-2 hover:bg-gray-600 cursor-pointer">Profile</div>
+                    </div>
+                </div>
+                
+                <div class="wp-menu-item has-submenu cursor-pointer">
+                    <div class="flex items-center px-4 py-2">
+                        <i class="fas fa-tools wp-menu-icon mr-3"></i>
+                        <span id="menu-tools">Tools</span>
+                        <i class="fas fa-chevron-right ml-auto text-xs"></i>
+                    </div>
+                    <div class="wp-submenu">
+                        <div class="px-8 py-2 hover:bg-gray-600 cursor-pointer">Available Tools</div>
+                        <div class="px-8 py-2 hover:bg-gray-600 cursor-pointer">Import</div>
+                        <div class="px-8 py-2 hover:bg-gray-600 cursor-pointer">Export</div>
+                    </div>
+                </div>
+                
+                <div class="wp-menu-item has-submenu cursor-pointer">
+                    <div class="flex items-center px-4 py-2">
+                        <i class="fas fa-cog wp-menu-icon mr-3"></i>
+                        <span id="menu-settings">Settings</span>
+                        <i class="fas fa-chevron-right ml-auto text-xs"></i>
+                    </div>
+                    <div class="wp-submenu">
+                        <div class="px-8 py-2 hover:bg-gray-600 cursor-pointer" onclick="showSection('settings')">General</div>
+                        <div class="px-8 py-2 hover:bg-gray-600 cursor-pointer">Writing</div>
+                        <div class="px-8 py-2 hover:bg-gray-600 cursor-pointer">Reading</div>
+                        <div class="px-8 py-2 hover:bg-gray-600 cursor-pointer">Discussion</div>
+                        <div class="px-8 py-2 hover:bg-gray-600 cursor-pointer">Media</div>
+                        <div class="px-8 py-2 hover:bg-gray-600 cursor-pointer">Permalinks</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Collapse Button -->
+        <div class="absolute bottom-4 left-4">
+            <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white">
+                <i class="fas fa-angle-left" id="collapse-icon"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div id="wp-main" class="wp-main-content">
+        <!-- Header -->
+        <div class="wp-header">
+            <div class="flex items-center justify-between px-5 py-3">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-2xl font-normal text-gray-800" id="page-title">Dashboard</h1>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button class="wp-button">
+                        <i class="fas fa-plus mr-1"></i>Add New
+                    </button>
+                    <button class="wp-button-secondary">
+                        Screen Options
+                    </button>
+                    <button class="wp-button-secondary">
+                        Help
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div id="dashboard-content" class="wp-content fade-in">
+            <!-- Welcome Panel -->
+            <div class="wp-welcome-panel mb-5">
+                <div class="p-6">
+                    <h2 class="text-xl font-normal mb-2">Welcome to WordPress!</h2>
+                    <p class="text-gray-600 mb-4">We've assembled some links to get you started:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <h3 class="font-medium mb-2">Get Started</h3>
+                            <ul class="space-y-1 text-sm">
+                                <li><a href="#" class="text-blue-600 hover:underline">Customize Your Site</a></li>
+                                <li><a href="#" class="text-blue-600 hover:underline">Create your Homepage</a></li>
+                                <li><a href="#" class="text-blue-600 hover:underline">View your site</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-medium mb-2">Next Steps</h3>
+                            <ul class="space-y-1 text-sm">
+                                <li><a href="#" class="text-blue-600 hover:underline">Write your first blog post</a></li>
+                                <li><a href="#" class="text-blue-600 hover:underline">Add an About page</a></li>
+                                <li><a href="#" class="text-blue-600 hover:underline">Set up your homepage</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-medium mb-2">More Actions</h3>
+                            <ul class="space-y-1 text-sm">
+                                <li><a href="#" class="text-blue-600 hover:underline">Manage widgets</a></li>
+                                <li><a href="#" class="text-blue-600 hover:underline">Manage menus</a></li>
+                                <li><a href="#" class="text-blue-600 hover:underline">Turn comments on or off</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button class="absolute top-4 right-4 text-gray-400 hover:text-gray-600" onclick="this.parentElement.parentElement.style.display='none'">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Widgets -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                <!-- At a Glance -->
+                <div class="dashboard-widget">
+                    <div class="dashboard-widget-header">
+                        <h3>At a Glance</h3>
+                    </div>
+                    <div class="p-4">
+                        <ul class="space-y-2">
+                            <li class="flex items-center justify-between">
+                                <span>247 Posts</span>
+                                <a href="#" class="text-blue-600 hover:underline text-sm">View all</a>
+                            </li>
+                            <li class="flex items-center justify-between">
+                                <span>12 Pages</span>
+                                <a href="#" class="text-blue-600 hover:underline text-sm">View all</a>
+                            </li>
+                            <li class="flex items-center justify-between">
+                                <span>89 Comments</span>
+                                <a href="#" class="text-blue-600 hover:underline text-sm">View all</a>
+                            </li>
+                        </ul>
+                        <p class="text-sm text-gray-600 mt-4">WordPress 6.4.2 running Twenty Twenty-Four theme.</p>
+                    </div>
+                </div>
+
+                <!-- Quick Draft -->
+                <div class="dashboard-widget">
+                    <div class="dashboard-widget-header">
+                        <h3>Quick Draft</h3>
+                    </div>
+                    <div class="p-4">
+                        <form class="space-y-3">
+                            <input type="text" placeholder="Title" class="w-full p-2 border border-gray-300 rounded text-sm">
+                            <textarea placeholder="What's on your mind?" rows="4" class="w-full p-2 border border-gray-300 rounded text-sm resize-none"></textarea>
+                            <div class="flex justify-between items-center">
+                                <button type="button" class="wp-button-secondary text-sm">Save Draft</button>
+                                <a href="#" class="text-blue-600 hover:underline text-sm">View all drafts</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Activity -->
+                <div class="dashboard-widget">
+                    <div class="dashboard-widget-header">
+                        <h3>Activity</h3>
+                    </div>
+                    <div class="p-4">
+                        <div class="space-y-3">
+                            <div class="border-l-4 border-blue-500 pl-3">
+                                <p class="text-sm"><strong>Post published:</strong> "Tutorial WordPress untuk Pemula"</p>
+                                <p class="text-xs text-gray-500">2 hours ago</p>
+                            </div>
+                            <div class="border-l-4 border-green-500 pl-3">
+                                <p class="text-sm"><strong>Comment approved:</strong> on "Tips Optimasi SEO"</p>
+                                <p class="text-xs text-gray-500">5 hours ago</p>
+                            </div>
+                            <div class="border-l-4 border-orange-500 pl-3">
+                                <p class="text-sm"><strong>Plugin activated:</strong> Yoast SEO</p>
+                                <p class="text-xs text-gray-500">1 day ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WordPress News -->
+                <div class="dashboard-widget">
+                    <div class="dashboard-widget-header">
+                        <h3>WordPress News</h3>
+                    </div>
+                    <div class="p-4">
+                        <div class="space-y-3">
+                            <div>
+                                <h4 class="font-medium text-sm mb-1">
+                                    <a href="#" class="text-blue-600 hover:underline">WordPress 6.4.2 Maintenance Release</a>
+                                </h4>
+                                <p class="text-xs text-gray-600">This maintenance release features 34 bug fixes and 6 performance enhancements...</p>
+                                <p class="text-xs text-gray-500 mt-1">December 6, 2023</p>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-sm mb-1">
+                                    <a href="#" class="text-blue-600 hover:underline">State of the Word 2023</a>
+                                </h4>
+                                <p class="text-xs text-gray-600">Matt Mullenweg delivered his annual State of the Word address...</p>
+                                <p class="text-xs text-gray-500 mt-1">December 11, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Other Content Sections -->
+        <div id="posts-content" class="wp-content hidden">
+            <div class="wp-box">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-normal">Posts</h2>
+                        <button class="wp-button">Add New Post</button>
+                    </div>
+                    <div class="border border-gray-300">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr class="text-left">
+                                    <th class="p-3 text-sm font-medium">Title</th>
+                                    <th class="p-3 text-sm font-medium">Author</th>
+                                    <th class="p-3 text-sm font-medium">Categories</th>
+                                    <th class="p-3 text-sm font-medium">Tags</th>
+                                    <th class="p-3 text-sm font-medium">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-t hover:bg-gray-50">
+                                    <td class="p-3">
+                                        <strong><a href="#" class="text-blue-600 hover:underline">Tutorial WordPress untuk Pemula</a></strong>
+                                        <div class="text-sm text-gray-600 mt-1">
+                                            <a href="#" class="hover:underline">Edit</a> | 
+                                            <a href="#" class="hover:underline">Quick Edit</a> | 
+                                            <a href="#" class="hover:underline text-red-600">Trash</a> | 
+                                            <a href="#" class="hover:underline">View</a>
+                                        </div>
+                                    </td>
+                                    <td class="p-3 text-sm">VINZZ</td>
+                                    <td class="p-3 text-sm">Tutorial</td>
+                                    <td class="p-3 text-sm">wordpress, pemula</td>
+                                    <td class="p-3 text-sm">Published<br>2023/12/15</td>
+                                </tr>
+                                <tr class="border-t hover:bg-gray-50">
+                                    <td class="p-3">
+                                        <strong><a href="#" class="text-blue-600 hover:underline">Tips Optimasi SEO Website</a></strong>
+                                        <div class="text-sm text-gray-600 mt-1">
+                                            <a href="#" class="hover:underline">Edit</a> | 
+                                            <a href="#" class="hover:underline">Quick Edit</a> | 
+                                            <a href="#" class="hover:underline text-red-600">Trash</a> | 
+                                            <a href="#" class="hover:underline">View</a>
+                                        </div>
+                                    </td>
+                                    <td class="p-3 text-sm">VINZZ</td>
+                                    <td class="p-3 text-sm">SEO</td>
+                                    <td class="p-3 text-sm">seo, optimasi</td>
+                                    <td class="p-3 text-sm">Published<br>2023/12/14</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="media-content" class="wp-content hidden">
+            <div class="wp-box">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-normal">Media Library</h2>
+                        <button class="wp-button">Add New Media</button>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                        <div class="border border-gray-300 p-2 hover:bg-gray-50 cursor-pointer">
+                            <div class="bg-gray-200 h-24 flex items-center justify-center mb-2">
+                                <i class="fas fa-image text-gray-400 text-2xl"></i>
+                            </div>
+                            <p class="text-xs text-center">image-1.jpg</p>
+                        </div>
+                        <div class="border border-gray-300 p-2 hover:bg-gray-50 cursor-pointer">
+                            <div class="bg-gray-200 h-24 flex items-center justify-center mb-2">
+                                <i class="fas fa-image text-gray-400 text-2xl"></i>
+                            </div>
+                            <p class="text-xs text-center">image-2.jpg</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pages-content" class="wp-content hidden">
+            <div class="wp-box">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-normal">Pages</h2>
+                        <button class="wp-button">Add New Page</button>
+                    </div>
+                    <p class="text-gray-600">Manage your website pages here.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="comments-content" class="wp-content hidden">
+            <div class="wp-box">
+                <div class="p-6">
+                    <h2 class="text-xl font-normal mb-4">Comments</h2>
+                    <p class="text-gray-600">Moderate and manage comments on your posts.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="themes-content" class="wp-content hidden">
+            <div class="wp-box">
+                <div class="p-6">
+                    <h2 class="text-xl font-normal mb-4">Themes</h2>
+                    <p class="text-gray-600">Manage and customize your website themes.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="plugins-content" class="wp-content hidden">
+            <div class="wp-box">
+                <div class="p-6">
+                    <h2 class="text-xl font-normal mb-4">Plugins</h2>
+                    <p class="text-gray-600">Install and manage WordPress plugins.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="users-content" class="wp-content hidden">
+            <div class="wp-box">
+                <div class="p-6">
+                    <h2 class="text-xl font-normal mb-4">Users</h2>
+                    <p class="text-gray-600">Manage user accounts and permissions.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="settings-content" class="wp-content hidden">
+            <div class="wp-box">
+                <div class="p-6">
+                    <h2 class="text-xl font-normal mb-4">General Settings</h2>
+                    <p class="text-gray-600">Configure your WordPress site settings.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let sidebarCollapsed = false;
+
+        function showSection(section) {
+            // Remove current class from all menu items
+            document.querySelectorAll('.wp-menu-item').forEach(item => {
+                item.classList.remove('current');
+            });
+            
+            // Hide all content sections
+            const sections = ['dashboard', 'posts', 'media', 'pages', 'comments', 'themes', 'plugins', 'users', 'settings'];
+            sections.forEach(s => {
+                const element = document.getElementById(s + '-content');
+                if (element) element.classList.add('hidden');
+            });
+            
+            // Show selected section
+            const selectedContent = document.getElementById(section + '-content');
+            if (selectedContent) {
+                selectedContent.classList.remove('hidden');
+                selectedContent.classList.add('fade-in');
+            }
+            
+            // Update page title
+            const titles = {
+                'dashboard': 'Dashboard',
+                'posts': 'Posts',
+                'media': 'Media Library',
+                'pages': 'Pages',
+                'comments': 'Comments',
+                'themes': 'Themes',
+                'plugins': 'Plugins',
+                'users': 'Users',
+                'settings': 'Settings'
+            };
+            document.getElementById('page-title').textContent = titles[section] || 'Dashboard';
+            
+            // Add current class to clicked menu item
+            event.target.closest('.wp-menu-item').classList.add('current');
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('wp-sidebar');
+            const mainContent = document.getElementById('wp-main');
+            const collapseIcon = document.getElementById('collapse-icon');
+            const siteTitle = document.getElementById('site-title');
+            const menuTexts = document.querySelectorAll('#wp-sidebar span:not(#site-title)');
+            
+            sidebarCollapsed = !sidebarCollapsed;
+            
+            if (sidebarCollapsed) {
+                sidebar.classList.add('folded');
+                mainContent.classList.add('folded');
+                collapseIcon.classList.remove('fa-angle-left');
+                collapseIcon.classList.add('fa-angle-right');
+                siteTitle.style.display = 'none';
+                menuTexts.forEach(text => {
+                    if (!text.classList.contains('bg-orange-500')) {
+                        text.style.display = 'none';
+                    }
+                });
+            } else {
+                sidebar.classList.remove('folded');
+                mainContent.classList.remove('folded');
+                collapseIcon.classList.remove('fa-angle-right');
+                collapseIcon.classList.add('fa-angle-left');
+                siteTitle.style.display = 'inline';
+                menuTexts.forEach(text => {
+                    text.style.display = 'inline';
+                });
+            }
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            showSection('dashboard');
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'974efc97d3fab5db',t:'MTc1NjE2NTc3NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
